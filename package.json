@@ -1,0 +1,22 @@
+{
+  "name": "ts-typedfiles",
+  "version": "1.0.0",
+  "description": "Generate filepaths from directory structure",
+  "main": "index.js",
+  "scripts": {
+    "build": "bun build ./src/index.ts --outdir ./dist"
+  },
+  "author": "https://github.com/Maxtremee",
+  "license": "MIT",
+  "dependencies": {
+    "pathe": "1.1.2"
+  },
+  "devDependencies": {
+    "typescript": "3.9.10",
+    "prettier": "3.2.4",
+    "@types/node": "20.11.5"
+  },
+  "peerDependencies": {
+    "typescript": ">=3.9.10"
+  }
+}
