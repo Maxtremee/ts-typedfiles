@@ -1,38 +1,35 @@
-import { parse } from "pathe"
-import fs from "node:fs"
+import { defineCommand, runMain } from "citty"
+import { generateFilePathsType } from "./parser.js"
 
-const outfile = fs.createWriteStream(process.argv[3], {
-  flags: "w",
-  encoding: "utf8",
+const main = defineCommand({
+  meta: {
+    name: "ts-typedfiles",
+    description: "Generate filepaths from directory structure",
+  },
+  args: {
+    path: {
+      type: "positional",
+      description: "The path to the directory to scan",
+      required: true,
+    },
+    output: {
+      type: "positional",
+      description: "The path to the output TypeScript file",
+      default: "./src/types/file-paths.d.ts",
+      required: false,
+    },
+    typeName: {
+      type: "string",
+      description: "The name of the type to be generated",
+      default: "FilePath",
+      required: false,
+    },
+  },
+  run({ args }) {
+    generateFilePathsType(args.path, args.output, args.typeName)
+  },
 })
 
-const FILE_START = `// THIS FILE IS GENERATED AUTOMATICALLY. DO NOT EDIT.
+runMain(main)
 
-export type Filepath = 
-`
-outfile.write(FILE_START)
-
-function writeSinglePath(path: string) {
-  const typeString = `| '${path}'\n`
-  outfile.write(typeString)
-}
-
-function parsePath(path: string) {
-  const parsed = parse(path)
-  const dir = fs.readdirSync(parsed.dir, {
-    withFileTypes: true,
-    recursive: true,
-  })
-
-  dir.forEach((file) => {
-    if (file.isFile()) {
-      writeSinglePath(file.name)
-    }
-  })
-}
-
-parsePath(process.argv[2])
-
-outfile.close()
-
-process.exit(0)
+export { generateFilePathsType }

@@ -2,21 +2,45 @@
   "name": "ts-typedfiles",
   "version": "1.0.0",
   "description": "Generate filepaths from directory structure",
-  "main": "index.js",
-  "scripts": {
-    "build": "bun build ./src/index.ts --outdir ./dist"
-  },
+  "keywords": [
+    "typescript",
+    "typesafety",
+    "filepaths"
+  ],
   "author": "https://github.com/Maxtremee",
+  "homepage": "https://github.com/Maxtremee/ts-typedfiles",
+  "bugs": {
+    "url": "https://github.com/Maxtremee/ts-typedfiles/issues"
+  },
   "license": "MIT",
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": "./dist/index.js",
+      "default": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "check-exports": "attw --pack .",
+    "check": "biome check",
+    "ci": "npm run check && npm run check-exports && npm run typecheck && npm run test && npm run build",
+    "local-release": "changeset version && changeset publish",
+    "prepublishOnly": "npm run ci",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
   "dependencies": {
-    "pathe": "1.1.2"
+    "citty": "0.1.6"
   },
   "devDependencies": {
-    "typescript": "3.9.10",
-    "prettier": "3.2.4",
-    "@types/node": "20.11.5"
-  },
-  "peerDependencies": {
-    "typescript": ">=3.9.10"
+    "@changesets/cli": "2.27.12",
+    "@arethetypeswrong/cli": "0.17.3",
+    "@types/node": "22.13.1",
+    "biome": "0.3.3",
+    "tsup": "8.3.6",
+    "typescript": "^5.0.0",
+    "vitest": "3.0.5"
   }
 }
