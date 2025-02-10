@@ -42,5 +42,6 @@
     "tsup": "8.3.6",
     "typescript": "^5.0.0",
     "vitest": "3.0.5"
-  }
+  },
+  "packageManager": "pnpm@10.2.1"
 }
