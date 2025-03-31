@@ -1,5 +1,11 @@
 # ts-typedfiles
 
+## 1.2.0
+
+### Minor Changes
+
+- 91ca329: publish only necessary files
+
 ## 1.1.0
 
 ### Minor Changes
